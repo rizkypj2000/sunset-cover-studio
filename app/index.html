@@ -3,21 +3,78 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cover Snap</title>
+<title>Sunset Cover Studio</title>
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<main class="app">
-  <section class="controls">
-    <h1>Cover Snap</h1>
-    <p>A photo and a caption, made into a square cover.</p>
-    <label>Photo <input id="photo" type="file" accept="image/*"></label>
-    <label>Caption <input id="caption" type="text" maxlength="40" value="Sunset Heist"></label>
-    <button id="export" type="button">Export PNG 1080 x 1080</button>
-    <p id="status" role="status"></p>
+<header class="topbar">
+  <canvas id="brandMark" class="brand" width="520" height="64" aria-label="Sunset Cover Studio"></canvas>
+  <nav class="size-presets" id="sizePresets" aria-label="Post size"></nav>
+  <div class="topbar-actions">
+    <span id="exportStatus" class="status" role="status"></span>
+    <button id="exportPng" class="primary" type="button">Export PNG</button>
+  </div>
+</header>
+
+<main class="workspace">
+  <aside class="sidebar sidebar-left">
+    <section class="card">
+      <h2>Photos</h2>
+      <label class="dropzone" id="dropZone">
+        <input id="photoInput" type="file" accept="image/*" multiple>
+        <strong>Add your photos</strong>
+        <span>Drop them here or click to choose</span>
+      </label>
+      <div id="photoTray" class="photo-tray" aria-label="Your photos"></div>
+      <button id="fillPanels" type="button" class="wide">Spread photos over all panels</button>
+    </section>
+    <section class="card" id="panelCard">
+      <h2>Panel <span id="panelNumber" class="pill">1</span></h2>
+      <p class="note">Click a photo above to put it in this panel. Drag the frame below, or the panel itself, to position it.</p>
+      <canvas id="cropNavigator" class="crop-navigator" width="432" height="300" aria-label="Crop of the selected panel"></canvas>
+      <label class="slider">Zoom <input id="panelZoom" type="range" min="1" max="6" step="0.01" value="1"></label>
+      <div class="button-row">
+        <button id="panelFlip" type="button">Flip</button>
+        <button id="panelReset" type="button">Reset crop</button>
+        <button id="panelEverywhere" type="button">Use in all</button>
+      </div>
+    </section>
+  </aside>
+
+  <section class="stage" id="stage">
+    <div class="canvas-wrap" id="canvasWrap">
+      <canvas id="preview" aria-label="Live cover preview"></canvas>
+    </div>
+    <p class="hint">Click a panel to select it · drag to pan · scroll to zoom · double-click to reset · drop a photo on a panel</p>
   </section>
-  <canvas id="cover" width="1080" height="1080" aria-label="The cover"></canvas>
+
+  <aside class="sidebar sidebar-right">
+    <section class="card">
+      <h2>Layout</h2>
+      <div id="layoutPicker" class="layout-picker"></div>
+    </section>
+    <section class="card">
+      <h2>Caption</h2>
+      <label>Kicker <input id="captionKicker" type="text" maxlength="40"></label>
+      <label>Title <textarea id="captionTitle" rows="2" maxlength="60"></textarea></label>
+      <label>Sub-line <input id="captionSubtitle" type="text" maxlength="48"></label>
+      <div id="letterStylePicker" class="chip-row" aria-label="Lettering style"></div>
+    </section>
+    <section class="card">
+      <h2>Colour grade</h2>
+      <div id="gradePicker" class="grade-picker"></div>
+      <label class="slider">Strength <input id="gradeStrength" type="range" min="0" max="1" step="0.01"></label>
+      <label class="slider">Contrast <input id="gradeContrast" type="range" min="0" max="1" step="0.01"></label>
+      <div id="effectToggles" class="chip-row" aria-label="Effects"></div>
+    </section>
+    <section class="card">
+      <h2>Frame &amp; title panel</h2>
+      <label class="slider">Border <input id="borderWidth" type="range" min="0" max="40" step="1"></label>
+      <div id="framePicker" class="chip-row" aria-label="Border colour"></div>
+      <div id="backdropPicker" class="chip-row" aria-label="Title backdrop"></div>
+    </section>
+  </aside>
 </main>
-<script type="module" src="./src/main.js"></script>
+<script type="module" src="./src/editor.js"></script>
 </body>
 </html>

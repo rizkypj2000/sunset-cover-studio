@@ -1,0 +1,4 @@
+out/
+.chrome-*/
+.smoke-downloads/
+.probe-*
